@@ -1,0 +1,6 @@
+table {
+  width: 100%;
+}
+::ng-deep .cdk-overlay-container mat-datepicker-content{
+  z-index:2000!important;
+}

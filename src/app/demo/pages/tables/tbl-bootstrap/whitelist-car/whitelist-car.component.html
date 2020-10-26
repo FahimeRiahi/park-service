@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-xl-12">
+    <app-card cardTitle="Whitelist Cars List" blockClass="table-border-style">
+      <div class="table-responsive">
+        <button type="button" class="btn btn-primary" (click)="modalDefault.show()">Add</button>
+        <app-ui-modal #modalDefault>
+          <div class="app-modal-header">
+            <h5 class="modal-title">Add car to whitelist</h5>
+            <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+                    (click)="modalDefault.hide()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="app-modal-body">
+            <form action="javascript:" [formGroup]="formGroup" *ngIf="formGroup">
+              <div class="form-group">
+                <label for="licensePlate">License Plate</label>
+                <input type="text" class="form-control" formControlName="licensePlate" id="licensePlate" placeholder="Enter License Plate">
+              </div>
+              <div class="form-group">
+                <mat-form-field appearance="fill">
+                  <mat-label>Allowed from</mat-label>
+                  <input matInput [matDatepicker]="fromDate" formControlName="allowedFromDate">
+                  <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                  <mat-datepicker #fromDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Allowed to</mat-label>
+                  <input matInput [matDatepicker]="toDate" formControlName="allowedToDate">
+                  <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                  <mat-datepicker #toDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field appearance="fill">
+                  <mat-label>AllowedTime From</mat-label>
+                  <input matInput placeholder="24hr format" formControlName="allowedTimeFrom" [ngxTimepicker]="allowedTimeFrom" [format]="24"  readonly>
+                  <ngx-material-timepicker #allowedTimeFrom></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field appearance="fill">
+                  <mat-label>AllowedTime to</mat-label>
+                  <input matInput placeholder="24hr format" formControlName="allowedTimeTo" [ngxTimepicker]="allowedTimeTo" [format]="24"  readonly>
+                  <ngx-material-timepicker #allowedTimeTo></ngx-material-timepicker>
+                </mat-form-field>
+              </div>
+              <button type="submit" class="btn btn-primary" (click)="addNewCarToWhitelist();">Add</button>
+            </form>
+
+          </div>
+
+        </app-ui-modal>
+        <app-toast uID="Success" toastTitle="Success!" toastCaption="" toastClass="m-b-10">
+          Add successful to whitelist cars
+        </app-toast>
+        <table mat-table [dataSource]="carList" class="mat-elevation-z8">
+          <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+            <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+      </div>
+
+    </app-card>
+  </div>
+</div>
