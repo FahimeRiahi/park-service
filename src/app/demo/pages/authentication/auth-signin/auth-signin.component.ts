@@ -40,7 +40,7 @@ export class AuthSigninComponent implements OnInit {
       this.saveUserData(user, token);
       this.router.navigate(['/']);
     }, (error) => {
-      this.toast.error(error);
+      this.toast.error('Network Error!');
     });
 
   }

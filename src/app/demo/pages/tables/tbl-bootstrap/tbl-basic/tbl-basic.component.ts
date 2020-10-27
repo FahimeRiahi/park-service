@@ -2,9 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {Subscription} from 'rxjs';
 import gql from 'graphql-tag';
-import {Users, User} from '../../../../../shared/user.interface';
+import {User, Users} from '../../../../../shared/user.interface';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {ToastService} from "../../../../../services/toast.service";
+
 @Component({
   selector: 'app-tbl-basic',
   templateUrl: './tbl-basic.component.html',
@@ -18,7 +20,7 @@ export class TblBasicComponent implements OnInit {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, public toastEvent: ToastService) {
   }
 
   ngOnInit() {
@@ -35,12 +37,18 @@ export class TblBasicComponent implements OnInit {
        `
     }).valueChanges
       .subscribe(({data, loading}) => {
-        this.usr = new MatTableDataSource(data.users);
-        this.usr.paginator = this.paginator;
+        if (data.users) {
+          this.usr = new MatTableDataSource(data.users);
+          this.usr.paginator = this.paginator;
+        } else {
+          this.toastEvent.info('Network Error!');
+        }
+
 
       });
 
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.usr.filter = filterValue.trim().toLowerCase();

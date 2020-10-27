@@ -33,7 +33,7 @@ export class AuthSignupComponent implements OnInit {
     this.authService.signup(this.form.value).subscribe((result: any) => {
       this.toast.success('sign up successful');
     }, (error) => {
-      this.toast.error(error);
+      this.toast.error('Network Error!');
     });
 
   }

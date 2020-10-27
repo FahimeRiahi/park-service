@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Car} from '../../../../../shared/whitelist-car.interface';
 import {Apollo} from 'apollo-angular';
 import {DatePipe} from '@angular/common';
@@ -16,7 +16,7 @@ import {MatTableDataSource} from '@angular/material/table';
   templateUrl: './whitelist-car.component.html',
   styleUrls: ['./whitelist-car.component.scss']
 })
-export class WhitelistCarComponent implements OnInit  {
+export class WhitelistCarComponent implements OnInit {
   carList: MatTableDataSource<Car>
   displayedColumns: string[] = ['license_plate', 'allowed_from_date', 'allowed_to_date', 'allowed_time_from', 'allowed_time_to'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
@@ -41,15 +41,19 @@ export class WhitelistCarComponent implements OnInit  {
   public LoadWhitelistCars() {
     this.allWhitelistCarsGQLService.watch().valueChanges
       .subscribe(({data, loading}) => {
-        this.carList = new MatTableDataSource( data.whitelistCars.map((x: any) => ({
-          id: x.id,
-          license_plate: x.license_plate,
-          allowed_from_date: this.datePipe.transform(x.allowed_from_date),
-          allowed_to_date: this.datePipe.transform(x.allowed_to_date),
-          allowed_time_from: x.allowed_time_from,
-          allowed_time_to: x.allowed_time_to
-        })));
-        this.carList.paginator = this.paginator;
+        if (data.whitelistCars) {
+          this.carList = new MatTableDataSource(data.whitelistCars.map((x: any) => ({
+            id: x.id,
+            license_plate: x.license_plate,
+            allowed_from_date: this.datePipe.transform(x.allowed_from_date),
+            allowed_to_date: this.datePipe.transform(x.allowed_to_date),
+            allowed_time_from: x.allowed_time_from,
+            allowed_time_to: x.allowed_time_to
+          })));
+          this.carList.paginator = this.paginator;
+        } else {
+          this.toastEvent.info('Network Error!');
+        }
 
       });
   }
