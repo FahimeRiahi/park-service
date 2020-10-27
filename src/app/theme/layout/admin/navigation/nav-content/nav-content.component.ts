@@ -1,7 +1,10 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { NavigationItem } from '../navigation';
-import { NextConfig } from '../../../../../app-config';
-import { Location } from '@angular/common';
+import {AfterViewInit, Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
+import {NavigationItem} from '../navigation';
+import {NextConfig} from '../../../../../app-config';
+import {Location} from '@angular/common';
+import {GC_AUTH_TOKEN, GC_USER, GC_USER_ID} from '../../../../../configuration/config';
+import {Router} from '@angular/router';
+import {User} from '../../../../../shared/user.interface';
 
 @Component({
   selector: 'app-nav-content',
@@ -18,13 +21,14 @@ export class NavContentComponent implements OnInit, AfterViewInit {
   public scrollWidth: any;
   public windowWidth: number;
   public isNavProfile: boolean;
+  currentUser: User;
 
   @Output() onNavMobCollapse = new EventEmitter();
 
   @ViewChild('navbarContent') navbarContent: ElementRef;
   @ViewChild('navbarWrapper') navbarWrapper: ElementRef;
 
-  constructor(public nav: NavigationItem, private zone: NgZone, private location: Location) {
+  constructor(public nav: NavigationItem, private zone: NgZone, private location: Location, public router: Router) {
     this.flatConfig = NextConfig.config;
     this.windowWidth = window.innerWidth;
 
@@ -38,6 +42,8 @@ export class NavContentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
+
     if (this.windowWidth < 992) {
       this.flatConfig['layout'] = 'vertical';
       setTimeout(() => {
@@ -61,7 +67,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
       this.nextDisabled = 'disabled';
     }
     this.prevDisabled = '';
-    if(this.flatConfig.rtlLayout) {
+    if (this.flatConfig.rtlLayout) {
       (document.querySelector('#side-nav-horizontal') as HTMLElement).style.marginRight = '-' + this.scrollWidth + 'px';
     } else {
       (document.querySelector('#side-nav-horizontal') as HTMLElement).style.marginLeft = '-' + this.scrollWidth + 'px';
@@ -75,7 +81,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
       this.prevDisabled = 'disabled';
     }
     this.nextDisabled = '';
-    if(this.flatConfig.rtlLayout) {
+    if (this.flatConfig.rtlLayout) {
       (document.querySelector('#side-nav-horizontal') as HTMLElement).style.marginRight = '-' + this.scrollWidth + 'px';
     } else {
       (document.querySelector('#side-nav-horizontal') as HTMLElement).style.marginLeft = '-' + this.scrollWidth + 'px';
@@ -102,7 +108,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
       const last_parent = up_parent.parentElement;
       if (parent.classList.contains('pcoded-hasmenu')) {
         parent.classList.add('active');
-      } else if(up_parent.classList.contains('pcoded-hasmenu')) {
+      } else if (up_parent.classList.contains('pcoded-hasmenu')) {
         up_parent.classList.add('active');
       } else if (last_parent.classList.contains('pcoded-hasmenu')) {
         last_parent.classList.add('active');
@@ -132,7 +138,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
           parent.classList.add('pcoded-trigger');
         }
         parent.classList.add('active');
-      } else if(up_parent.classList.contains('pcoded-hasmenu')) {
+      } else if (up_parent.classList.contains('pcoded-hasmenu')) {
         if (this.flatConfig['layout'] === 'vertical') {
           up_parent.classList.add('pcoded-trigger');
         }
@@ -146,4 +152,11 @@ export class NavContentComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onLoggedOut() {
+    localStorage.removeItem(GC_USER_ID);
+    localStorage.removeItem(GC_USER);
+    localStorage.removeItem(GC_AUTH_TOKEN);
+    sessionStorage.clear();
+    this.router.navigate(['/auth/signin']);
+  }
 }

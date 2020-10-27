@@ -1,0 +1,31 @@
+<div class="auth-wrapper">
+  <div class="auth-content text-center">
+    <form class="login-form" fxFlex [formGroup]="form">
+
+    <div class="card borderless">
+      <div class="row align-items-center text-center">
+        <div class="col-md-12">
+          <div class="card-body">
+            <h4 class="mb-3 f-w-400">Sign up</h4>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Email" formControlName="email">
+            </div>
+            <div class="input-group mb-4">
+              <input type="password" class="form-control" placeholder="Password" formControlName="password">
+            </div>
+
+            <button class="btn btn-primary btn-block mb-4" (click)="signUp()">Sign up</button>
+            <p class="mb-2">Already have an account? <a [routerLink]="['/auth/signin']" class="f-w-400">Signin</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

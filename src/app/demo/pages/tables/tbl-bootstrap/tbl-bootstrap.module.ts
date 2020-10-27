@@ -11,6 +11,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {CdkTableModule} from '@angular/cdk/table';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +25,9 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatPaginatorModule,
+    CdkTableModule
   ],
   declarations: [WhitelistCarComponent],
   providers: [DatePipe]

@@ -8,12 +8,14 @@ import gql from 'graphql-tag';
 export class WhitelistPostGQLService {
   mutation = gql`
     mutation newWhitelistCar($license_plate: String! , $allowed_from_date : String! ,$allowed_to_date: String! ,$allowed_time_from: String!, $allowed_time_to: String! ) {
-      newWhitelistCar(license_plate: $license_plate, allowed_from_date:$allowed_from_date , allowed_to_date: $allowed_to_date ,allowed_time_from: $allowed_time_from ,allowed_time_to: $allowed_time_to ) {
+      newwhitelistcar(license_plate: $license_plate, allowed_from_date:$allowed_from_date , allowed_to_date: $allowed_to_date ,allowed_time_from: $allowed_time_from ,allowed_time_to: $allowed_time_to ) {
+        whitelistCar{
         license_plate
         allowed_from_date
         allowed_to_date
         allowed_time_from
         allowed_time_to
+        }
       }
     }
   `;

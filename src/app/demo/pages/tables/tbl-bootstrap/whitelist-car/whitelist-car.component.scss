@@ -1,6 +1,15 @@
+::ng-deep .cdk-overlay-container mat-datepicker-content{
+  z-index:2000!important;
+}
 table {
   width: 100%;
 }
-::ng-deep .cdk-overlay-container mat-datepicker-content{
-  z-index:2000!important;
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
 }

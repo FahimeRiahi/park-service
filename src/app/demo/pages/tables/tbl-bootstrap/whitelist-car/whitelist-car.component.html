@@ -2,7 +2,6 @@
   <div class="col-xl-12">
     <app-card cardTitle="Whitelist Cars List" blockClass="table-border-style">
       <div class="table-responsive">
-        <button type="button" class="btn btn-primary" (click)="modalDefault.show()">Add</button>
         <app-ui-modal #modalDefault>
           <div class="app-modal-header">
             <h5 class="modal-title">Add car to whitelist</h5>
@@ -31,27 +30,31 @@
               </div>
               <div class="form-group">
                 <mat-form-field appearance="fill">
-                  <mat-label>AllowedTime From</mat-label>
+                  <mat-label>Start Time</mat-label>
                   <input matInput placeholder="24hr format" formControlName="allowedTimeFrom" [ngxTimepicker]="allowedTimeFrom" [format]="24"  readonly>
                   <ngx-material-timepicker #allowedTimeFrom></ngx-material-timepicker>
                 </mat-form-field>
               </div>
               <div class="form-group">
                 <mat-form-field appearance="fill">
-                  <mat-label>AllowedTime to</mat-label>
+                  <mat-label>End Time</mat-label>
                   <input matInput placeholder="24hr format" formControlName="allowedTimeTo" [ngxTimepicker]="allowedTimeTo" [format]="24"  readonly>
                   <ngx-material-timepicker #allowedTimeTo></ngx-material-timepicker>
                 </mat-form-field>
               </div>
-              <button type="submit" class="btn btn-primary" (click)="addNewCarToWhitelist();">Add</button>
+              <div style="text-align: center">
+                <button type="submit" class="btn btn-primary" (click)="addNewCarToWhitelist();">Add</button>
+              </div>
             </form>
 
           </div>
 
         </app-ui-modal>
-        <app-toast uID="Success" toastTitle="Success!" toastCaption="" toastClass="m-b-10">
-          Add successful to whitelist cars
-        </app-toast>
+        <button type="button" class="btn btn-primary" (click)="modalDefault.show()" style="margin-bottom: 10px">Add</button>
+        <mat-form-field>
+          <mat-label>Filter Value</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
         <table mat-table [dataSource]="carList" class="mat-elevation-z8">
           <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
             <th mat-header-cell *matHeaderCellDef> {{column}} </th>
@@ -61,6 +64,7 @@
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
           <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>
 
     </app-card>

@@ -2,6 +2,7 @@
 
 /* SCSS */
 @import "scss/style";
+@import '~angular2-toaster/toaster';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

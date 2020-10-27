@@ -5,14 +5,14 @@
         <img class="img-radius" src="assets/images/user/avatar-1.jpg" alt="User-Profile-Image">
         <div class="user-details" (click)="isNavProfile = !isNavProfile">
           <span></span>
-          <div id="more-details">Administrator<i class="fa m-l-5" [ngClass]="{'fa-chevron-up': isNavProfile, 'fa-chevron-down': !isNavProfile }"></i></div>
+          <div id="more-details">{{currentUser.first_name + ' ' + currentUser.last_name}}<i class="fa m-l-5" [ngClass]="{'fa-chevron-up': isNavProfile, 'fa-chevron-down': !isNavProfile }"></i></div>
         </div>
       </div>
       <div class="collapse" id="nav-user-link" *ngIf="isNavProfile" [style.display]="'block'">
         <ul class="list-inline">
           <li class="list-inline-item"><a href="javascript:"><i class="feather icon-user m-r-5"></i></a></li>
           <li class="list-inline-item"><a href="javascript:"><i class="feather icon-mail m-r-5"></i><small class="badge badge-pill badge-primary">5</small></a></li>
-          <li class="list-inline-item"><a href="javascript:" class="text-danger"><i class="feather icon-power m-r-5"></i></a></li>
+          <li class="list-inline-item"><a href="javascript:" class="text-danger"><i class="feather icon-power m-r-5" (click)="onLoggedOut()"></i></a></li>
         </ul>
       </div>
     </div>

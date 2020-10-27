@@ -7,9 +7,9 @@
       <div class=" dropdown-menu-right profile-notification" ngbDropdownMenu>
         <div class="pro-head">
           <img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
-          <span>admin</span>
+          <span>{{currentUser.first_name + ' ' + currentUser.last_name}}</span>
           <a href="javascript:" class="dud-logout" title="Logout">
-            <i class="feather icon-log-out"></i>
+            <i class="feather icon-log-out" (click)="onLoggedOut()"></i>
           </a>
         </div>
         <ul class="pro-body">

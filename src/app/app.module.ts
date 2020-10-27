@@ -5,7 +5,7 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+import {InMemoryCache, NormalizedCacheObject} from 'apollo-cache-inmemory';
 
 
 import {AppRoutingModule} from './app-routing.module';
@@ -22,6 +22,7 @@ import {NavItemComponent} from './theme/layout/admin/navigation/nav-content/nav-
 import {NavBarComponent} from './theme/layout/admin/nav-bar/nav-bar.component';
 import {NavRightComponent} from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
 import {ConfigurationComponent} from './theme/layout/admin/configuration/configuration.component';
+import {ToasterModule, ToasterService} from 'angular2-toaster';
 
 import {ToggleFullScreenDirective} from './theme/shared/full-screen/toggle-full-screen';
 /* Menu Items */
@@ -56,16 +57,29 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     NgbTooltipModule,
     NgbButtonsModule,
     NgbTabsetModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    ToasterModule
   ],
-  providers: [NavigationItem],
+  providers: [NavigationItem , ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
+    const defaultOption: NormalizedCacheObject = {
+      watchQuery: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'all',
+      },
+    }
     apollo.create({
-      link: httpLink.create({uri: 'http://localhost:4000/graphql'}),
-      cache: new InMemoryCache()
+      link: httpLink.create({uri: 'http://localhost:4000'}),
+      cache: new InMemoryCache(),
+      defaultOptions : defaultOption
+
     });
   }
 }

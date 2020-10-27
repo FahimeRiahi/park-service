@@ -1,0 +1,43 @@
+type Query {
+  users: [User!]!
+  whitelistCars: [WhitelistCar!]!
+}
+
+type Mutation {
+  newwhitelistcar(license_plate: String! , allowed_from_date: String! , allowed_to_date: String! , allowed_time_from: String! , allowed_time_to:String!): Car!
+  signup (email: String! , password: String! , first_name: String , last_name:String): AuthPayload!
+  login(email: String!, password: String!): AuthPayload
+}
+
+type WhitelistCar {
+  id: ID!,
+  license_plate: String!,
+  allowed_from_date: String!,
+  allowed_to_date: String!,
+  allowed_time_from: String!,
+  allowed_time_to: String!
+}
+
+type Car
+{
+whitelistCar: WhitelistCar
+}
+
+
+type User {
+  id: ID!,
+  email: String!,
+  first_name: String,
+  last_name: String,
+  mobile: String,
+  address: String,
+  role: String,
+  password: String!,
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+

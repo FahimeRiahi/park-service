@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {GC_AUTH_TOKEN, GC_USER_ID} from '../../../../configuration/config';
+import {GC_AUTH_TOKEN, GC_USER, GC_USER_ID} from '../../../../configuration/config';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
-import {Apollo} from 'apollo-angular';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToastService} from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-auth-signin',
@@ -11,41 +12,43 @@ import {Apollo} from 'apollo-angular';
 })
 export class AuthSigninComponent implements OnInit {
 
-  email = '';
-  password = '';
-  name = '';
+
+  form: FormGroup;
 
   constructor(private router: Router,
               private authService: AuthService,
-              private apollo: Apollo) {
+              private formBuilder: FormBuilder,
+              protected toast: ToastService,
+  ) {
   }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.minLength(4), Validators.maxLength(50), Validators.required]],
+      password: ['', [Validators.minLength(6), Validators.maxLength(50), Validators.required]]
+    });
   }
 
   confirm() {
-    // this.apollo.mutate({
-    //   mutation: SIGNIN_USER_MUTATION,
-    //   variables: {
-    //     email: this.email,
-    //     password: this.password
-    //   }
-    // }).subscribe((result) => {
-    //   const id = result.data.signinUser.user.id;
-    //   const token = result.data.signinUser.token;
-    //   this.saveUserData(id, token);
-    //
-    //   this.router.navigate(['/']);
-    //
-    // }, (error) => {
-    //   alert(error);
-    // });
+    if (!this.form.valid) {
+      this.toast.error('Username or Password is Invalid');
+      return;
+    }
+    this.authService.login(this.form.value).subscribe((result: any) => {
+      const user = result.data.login.user;
+      const token = result.data.login.token;
+      this.saveUserData(user, token);
+      this.router.navigate(['/']);
+    }, (error) => {
+      this.toast.error(error);
+    });
 
   }
 
-  saveUserData(id, token) {
-    localStorage.setItem(GC_USER_ID, id);
+  saveUserData(user, token) {
+    localStorage.setItem(GC_USER, JSON.stringify(user));
+    localStorage.setItem(GC_USER_ID, user.id);
     localStorage.setItem(GC_AUTH_TOKEN, token);
-    this.authService.setUserId(id);
+    this.authService.setUserId(user.id);
   }
 }

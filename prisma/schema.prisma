@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -12,20 +9,19 @@ generator client {
 
 model User {
   id       Int     @default(autoincrement()) @id
-  username    String  @unique
   first_name     String?
   last_name     String?
   address     String?
   mobile     String?
-  email     String?
+  email     String @unique
   password String
 }
 
 model WhitelistCar{
   id       Int     @default(autoincrement()) @id
   license_plate    String  @unique
-  allowed_from_date DateTime
-  allowed_to_date DateTime
+  allowed_from_date String
+  allowed_to_date String
   allowed_time_from String
   allowed_time_to String
 
