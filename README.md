@@ -9,7 +9,7 @@ It is single paged angular application built. This project was generated with [A
 ## project setup
 ```shell
 git clone
-git clone https://github.com/pcreem/graphqlTodoServer.git
+git clone https://github.com/FahimeRiahi/park-service.git
 npm install
 npm start
 ```
