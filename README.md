@@ -5,14 +5,15 @@
 ## About Project
 
 It is single paged angular application built. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
-### Install npm packages
 
-Install the `npm` packages described in the `package.json` and verify that it works:
-
+## project setup
 ```shell
+git clone
+git clone https://github.com/pcreem/graphqlTodoServer.git
 npm install
 npm start
 ```
+
 
 The `npm start` command compiles TypeScript , watches for changes to the source files, and runs `lite-server` on port `4200`and also it starts node index as a backend server on port `4000`.
 Navigate to `http://localhost:4200/` to see the result.
