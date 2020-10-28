@@ -1,9 +1,24 @@
 # Parking Service 
+## prerequisites: 
+* [Node.js](https://nodejs.org/en/) installed on your machine
 
 ## About Project
 
 It is single paged angular application built. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
-Live Demo is available in this link: [Demo](https://parkdepot-app.herokuapp.com/)
+### Install npm packages
+
+Install the `npm` packages described in the `package.json` and verify that it works:
+
+```shell
+npm install
+npm start
+```
+
+The `npm start` command compiles TypeScript , watches for changes to the source files, and runs `lite-server` on port `4200`and also it starts node index as a backend server on port `4000`.
+Navigate to `http://localhost:4200/` to see the result.
+
+Shut it down manually with `Ctrl-C`.
+
 
 ## Deployment
 
