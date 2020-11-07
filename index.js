@@ -19,6 +19,10 @@ const graphQLServer = new GraphQLServer({
       prisma,
     }
   },
+
 })
-const PORT = process.env.PORT || 4000
-graphQLServer.start(PORT, () => console.log(`Server is running on http://localhost:${PORT}`))
+const options = {
+  port: 8089
+}
+graphQLServer.start(options, () => console.log(`Server is running on http://localhost:${options.port}`))
+
