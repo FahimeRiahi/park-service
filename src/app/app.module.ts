@@ -76,7 +76,7 @@ export class AppModule {
       },
     }
     apollo.create({
-      link: httpLink.create({uri: 'http://localhost:4000'}),
+      link: httpLink.create({uri: 'http://139.59.144.83:8089/'}),
       cache: new InMemoryCache(),
       defaultOptions : defaultOption
 
