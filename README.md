@@ -5,6 +5,7 @@
 ## About Project
 
 It is single paged angular application built. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
+See live [Demo](http://139.59.144.83) here.
 
 ## project setup
 ```shell
